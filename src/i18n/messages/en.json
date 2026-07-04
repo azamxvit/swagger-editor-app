@@ -1,0 +1,104 @@
+{
+  "app": {
+    "title": "Swagger Editor",
+    "description": "Edit, validate, and test OpenAPI specifications"
+  },
+  "nav": {
+    "about": "About",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "history": "History",
+    "editor": "Editor",
+    "home": "Home"
+  },
+  "auth": {
+    "signInTitle": "Sign In",
+    "signUpTitle": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signInButton": "Sign In",
+    "signUpButton": "Create Account",
+    "signInSuccess": "Signed in successfully",
+    "signUpSuccess": "Account created successfully",
+    "signOutSuccess": "Signed out successfully",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "editor": {
+    "title": "Editor",
+    "format": "Format",
+    "json": "JSON",
+    "yaml": "YAML",
+    "validate": "Validate",
+    "save": "Save Schema",
+    "saveSuccess": "Schema saved successfully",
+    "saveError": "Failed to save schema",
+    "valid": "Schema is valid",
+    "invalid": "Schema has errors",
+    "loading": "Loading editor..."
+  },
+  "viewer": {
+    "title": "Viewer",
+    "noSpec": "Load a valid OpenAPI schema to see endpoints",
+    "parameters": "Parameters",
+    "requestBody": "Request Body",
+    "responses": "Responses",
+    "execute": "Execute",
+    "executing": "Executing...",
+    "generateCurl": "Generate cURL",
+    "copyCurl": "Copy to Clipboard",
+    "curlCopied": "cURL command copied",
+    "response": "Response",
+    "status": "Status",
+    "headers": "Headers",
+    "body": "Body",
+    "duration": "Duration",
+    "path": "Path",
+    "query": "Query",
+    "header": "Header",
+    "cookie": "Cookie",
+    "required": "required",
+    "example": "Example",
+    "schema": "Schema",
+    "noParameters": "No parameters",
+    "selectEndpoint": "Select an endpoint to view details"
+  },
+  "history": {
+    "title": "History & Analytics",
+    "empty": "You haven't executed any requests yet",
+    "emptyHint": "Use the Editor and Viewer to test API endpoints",
+    "goToEditor": "Go to Editor",
+    "method": "Method",
+    "url": "URL",
+    "status": "Status",
+    "duration": "Duration",
+    "timestamp": "Timestamp",
+    "requestSize": "Request Size",
+    "responseSize": "Response Size",
+    "error": "Error",
+    "endpoint": "Endpoint",
+    "details": "Details",
+    "back": "Back to History"
+  },
+  "about": {
+    "title": "About",
+    "courseTitle": "RS School Course",
+    "courseDescription": "This project was developed as part of the RS School JavaScript/Front-end course — a free educational program by Rolling Scopes School that helps students become professional developers through hands-on projects and mentorship.",
+    "projectTitle": "Project",
+    "projectDescription": "Swagger Editor App is a full-stack OpenAPI editor and REST client. Edit specifications in JSON or YAML, validate schemas, explore endpoints, execute requests through a server-side proxy to avoid CORS issues, and track request history with analytics.",
+    "teamTitle": "Our Team",
+    "techTitle": "Technologies",
+    "resourcesTitle": "Resources"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "unauthorized": "You must be signed in to access this page",
+    "network": "Network error. Please check your connection.",
+    "proxy": "Failed to execute request"
+  },
+  "footer": {
+    "copyright": "Swagger Editor App — RS School Project"
+  }
+}

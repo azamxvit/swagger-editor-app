@@ -1,0 +1,104 @@
+{
+  "app": {
+    "title": "Swagger Редактор",
+    "description": "Редактируйте, проверяйте и тестируйте спецификации OpenAPI"
+  },
+  "nav": {
+    "about": "О проекте",
+    "signIn": "Войти",
+    "signUp": "Регистрация",
+    "signOut": "Выйти",
+    "history": "История",
+    "editor": "Редактор",
+    "home": "Главная"
+  },
+  "auth": {
+    "signInTitle": "Вход",
+    "signUpTitle": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "signInButton": "Войти",
+    "signUpButton": "Создать аккаунт",
+    "signInSuccess": "Вход выполнен успешно",
+    "signUpSuccess": "Аккаунт создан успешно",
+    "signOutSuccess": "Выход выполнен успешно",
+    "noAccount": "Нет аккаунта?",
+    "hasAccount": "Уже есть аккаунт?"
+  },
+  "editor": {
+    "title": "Редактор",
+    "format": "Формат",
+    "json": "JSON",
+    "yaml": "YAML",
+    "validate": "Проверить",
+    "save": "Сохранить схему",
+    "saveSuccess": "Схема сохранена",
+    "saveError": "Не удалось сохранить схему",
+    "valid": "Схема валидна",
+    "invalid": "Схема содержит ошибки",
+    "loading": "Загрузка редактора..."
+  },
+  "viewer": {
+    "title": "Просмотр",
+    "noSpec": "Загрузите валидную OpenAPI схему для просмотра эндпоинтов",
+    "parameters": "Параметры",
+    "requestBody": "Тело запроса",
+    "responses": "Ответы",
+    "execute": "Выполнить",
+    "executing": "Выполнение...",
+    "generateCurl": "Сгенерировать cURL",
+    "copyCurl": "Копировать",
+    "curlCopied": "cURL скопирован",
+    "response": "Ответ",
+    "status": "Статус",
+    "headers": "Заголовки",
+    "body": "Тело",
+    "duration": "Длительность",
+    "path": "Путь",
+    "query": "Запрос",
+    "header": "Заголовок",
+    "cookie": "Cookie",
+    "required": "обязательный",
+    "example": "Пример",
+    "schema": "Схема",
+    "noParameters": "Нет параметров",
+    "selectEndpoint": "Выберите эндпоинт для просмотра"
+  },
+  "history": {
+    "title": "История и аналитика",
+    "empty": "Вы ещё не выполняли запросы",
+    "emptyHint": "Используйте Редактор и Просмотр для тестирования API",
+    "goToEditor": "Перейти к редактору",
+    "method": "Метод",
+    "url": "URL",
+    "status": "Статус",
+    "duration": "Длительность",
+    "timestamp": "Время",
+    "requestSize": "Размер запроса",
+    "responseSize": "Размер ответа",
+    "error": "Ошибка",
+    "endpoint": "Эндпоинт",
+    "details": "Подробности",
+    "back": "Назад к истории"
+  },
+  "about": {
+    "title": "О проекте",
+    "courseTitle": "Курс RS School",
+    "courseDescription": "Этот проект разработан в рамках курса RS School JavaScript/Front-end — бесплатной образовательной программы Rolling Scopes School, которая помогает студентам стать профессиональными разработчиками.",
+    "projectTitle": "Проект",
+    "projectDescription": "Swagger Editor App — полнофункциональный редактор OpenAPI и REST-клиент. Редактируйте спецификации в JSON или YAML, проверяйте схемы, исследуйте эндпоинты, выполняйте запросы через серверный прокси и отслеживайте историю запросов.",
+    "teamTitle": "Наша команда",
+    "techTitle": "Технологии",
+    "resourcesTitle": "Ресурсы"
+  },
+  "errors": {
+    "generic": "Что-то пошло не так. Попробуйте снова.",
+    "unauthorized": "Для доступа необходимо войти в систему",
+    "network": "Ошибка сети. Проверьте подключение.",
+    "proxy": "Не удалось выполнить запрос"
+  },
+  "footer": {
+    "copyright": "Swagger Editor App — проект RS School"
+  }
+}

@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #0f1117;
+  --foreground: #e4e4e7;
+  --surface: #181b24;
+  --surface-hover: #1f2330;
+  --border: #2a2f3d;
+  --muted: #9ca3af;
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-lg bg-[var(--primary)] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[var(--primary-hover)] disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-medium text-[var(--foreground)] transition-colors hover:bg-[var(--surface-hover)] disabled:opacity-50;
+}
+
+.input {
+  @apply w-full rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)] placeholder:text-[var(--muted)] focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)];
+}
+
+.label {
+  @apply mb-1 block text-sm font-medium text-[var(--foreground)];
+}
+
+.error-text {
+  @apply mt-1 text-xs text-red-400;
+}
