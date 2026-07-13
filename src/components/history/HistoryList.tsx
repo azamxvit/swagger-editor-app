@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import type { RequestHistoryEntry } from '@/lib/openapi/types';
