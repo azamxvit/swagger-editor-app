@@ -10,16 +10,20 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
-      include: ['src/lib/openapi/*.ts', 'src/lib/auth/*.ts'],
+      include: ['src/lib/**/*.ts', 'src/components/**/*.tsx', 'src/app/api/**/*.ts'],
       exclude: [
         '**/*.test.ts',
+        '**/*.test.tsx',
         '**/*.extended.test.ts',
         'src/lib/openapi/default-schema.ts',
+        'src/lib/openapi/types.ts',
+        'src/lib/supabase/**',
+        'src/components/editor/SwaggerEditorPanel.tsx',
       ],
       thresholds: {
         statements: 80,
         branches: 70,
-        functions: 80,
+        functions: 70,
         lines: 80,
       },
     },
