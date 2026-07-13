@@ -1,13 +1,20 @@
-import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { HistoryList } from '@/components/history/HistoryList';
 import type { RequestHistoryEntry } from '@/lib/openapi/types';
+
+const refresh = vi.fn();
 
 vi.mock('@/i18n/routing', () => ({
   Link: ({ children, href }: { children: React.ReactNode; href: string }) => (
     <a href={href}>{children}</a>
   ),
+  useRouter: () => ({ refresh }),
+}));
+
+vi.mock('react-hot-toast', () => ({
+  default: { success: vi.fn(), error: vi.fn() },
 }));
 
 const messages = {
@@ -24,6 +31,10 @@ const messages = {
     requestSize: 'Request Size',
     responseSize: 'Response Size',
     details: 'Details',
+    clear: 'Clear',
+    clearConfirm: 'Clear all request history?',
+    clearSuccess: 'History cleared',
+    clearError: 'Failed to clear history',
   },
 };
 
@@ -49,6 +60,15 @@ const sampleEntry: RequestHistoryEntry = {
 };
 
 describe('HistoryList', () => {
+  beforeEach(() => {
+    refresh.mockReset();
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: true }) }),
+    );
+    vi.stubGlobal('confirm', vi.fn().mockReturnValue(true));
+  });
+
   it('shows empty state with link to editor', () => {
     renderWithIntl(<HistoryList entries={[]} />);
     expect(screen.getByText("You haven't executed any requests yet")).toBeInTheDocument();
@@ -67,5 +87,15 @@ describe('HistoryList', () => {
     const errorEntry = { ...sampleEntry, status_code: 500 };
     renderWithIntl(<HistoryList entries={[errorEntry]} />);
     expect(screen.getByText('500')).toHaveClass('text-red-400');
+  });
+
+  it('shows Clear button and clears history', async () => {
+    renderWithIntl(<HistoryList entries={[sampleEntry]} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Clear' }));
+
+    await waitFor(() => {
+      expect(fetch).toHaveBeenCalledWith('/api/history', { method: 'DELETE' });
+      expect(screen.getByText("You haven't executed any requests yet")).toBeInTheDocument();
+    });
   });
 });

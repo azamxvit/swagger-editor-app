@@ -106,7 +106,11 @@
     "error": "Error",
     "endpoint": "Endpoint",
     "details": "Details",
-    "back": "Back to History"
+    "back": "Back to History",
+    "clear": "Clear",
+    "clearConfirm": "Clear all request history? This cannot be undone.",
+    "clearSuccess": "History cleared",
+    "clearError": "Failed to clear history"
   },
   "about": {
     "title": "About",

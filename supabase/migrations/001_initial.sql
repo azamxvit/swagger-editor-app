@@ -56,3 +56,7 @@ CREATE POLICY "Users can view own history"
 CREATE POLICY "Users can insert own history"
   ON request_history FOR INSERT
   WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete own history"
+  ON request_history FOR DELETE
+  USING (auth.uid() = user_id);
