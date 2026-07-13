@@ -1,4 +1,3 @@
--- User schemas table
 CREATE TABLE IF NOT EXISTS user_schemas (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -27,7 +26,6 @@ CREATE POLICY "Users can delete own schema"
   ON user_schemas FOR DELETE
   USING (auth.uid() = user_id);
 
--- Request history table
 CREATE TABLE IF NOT EXISTS request_history (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
