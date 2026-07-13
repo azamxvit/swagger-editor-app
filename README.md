@@ -1,21 +1,21 @@
 # Swagger Editor App
 
-A full-stack OpenAPI/Swagger editor and REST client built with Next.js. Edit specifications in JSON or YAML, validate schemas, explore endpoints, execute requests through a server-side proxy (CORS-free), and track request history with analytics.
+An OpenAPI/Swagger editor with a built-in REST client, made with Next.js. You write a spec in JSON or YAML, the app validates it and shows the endpoints. Any endpoint can be tested right from the browser: requests go through the Next.js server, so CORS is not a problem. Signed-in users also get request history with stats.
 
 ## Live Demo
 
 <!-- Replace with your deployed URL after deployment -->
 **[Deployed App](https://your-app.vercel.app)**
 
-## Features
+## What it does
 
-- **Swagger Editor** — Monaco-based editor with JSON/YAML auto-detection, format conversion, and validation
-- **Swagger Viewer** — Browse endpoints, view parameters/schemas/responses, Try-It-Out, generate cURL
-- **Authentication** — Email/password sign up and sign in via Supabase
-- **Schema Persistence** — Authenticated users can save and restore OpenAPI schemas
-- **History & Analytics** — Server-rendered request history with duration, status, sizes, and error details
-- **i18n** — English and Russian language support
-- **CORS Proxy** — API requests routed through Next.js server
+- **Editor**: Monaco editor, understands both JSON and YAML, detects the format on paste and can convert between them. Shows validation errors as you type.
+- **Viewer**: list of endpoints from the spec, with parameters, request/response schemas and status codes.
+- **Try It Out**: fill in the parameters, hit Execute and see the response. There is also a "Generate cURL" button.
+- **Auth**: sign up / sign in with email and password (Supabase).
+- **Saved schemas**: if you are signed in, your schema is saved and loaded back on next login.
+- **History**: every request you run is recorded — method, URL, status, duration, sizes, errors.
+- **Two languages**: English and Russian, switcher in the header.
 
 ## Tech Stack
 
@@ -32,7 +32,7 @@ A full-stack OpenAPI/Swagger editor and REST client built with Next.js. Edit spe
 
 | Name | Role | GitHub |
 |------|------|--------|
-| Azamat Omirtaj | Team Lead | [@azamatomirtaj](https://github.com/azamatomirtaj) |
+| Azamat Omirtay | Team Lead | [@azamxvit](https://github.com/azamxvit) |
 | Team Member 2 | Developer | [GitHub]() |
 | Team Member 3 | Developer | [GitHub]() |
 
@@ -47,7 +47,7 @@ A full-stack OpenAPI/Swagger editor and REST client built with Next.js. Edit spe
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-org/swagger-editor-app.git
+git clone https://github.com/azamxvit/swagger-editor-app.git
 cd swagger-editor-app
 git checkout develop
 ```
@@ -129,4 +129,4 @@ Deploy to [Vercel](https://vercel.com):
 
 ## RS School
 
-This project was developed as part of the [RS School](https://rs.school/) JavaScript/Front-end course.
+Team project for the [RS School](https://rs.school/) React course.

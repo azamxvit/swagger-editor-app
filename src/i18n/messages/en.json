@@ -85,9 +85,9 @@
   "about": {
     "title": "About",
     "courseTitle": "RS School Course",
-    "courseDescription": "This project was developed as part of the RS School JavaScript/Front-end course — a free educational program by Rolling Scopes School that helps students become professional developers through hands-on projects and mentorship.",
+    "courseDescription": "We built this app as a team project for the RS School React course. RS School is a free course from The Rolling Scopes community where students learn frontend by working on real tasks with mentors.",
     "projectTitle": "Project",
-    "projectDescription": "Swagger Editor App is a full-stack OpenAPI editor and REST client. Edit specifications in JSON or YAML, validate schemas, explore endpoints, execute requests through a server-side proxy to avoid CORS issues, and track request history with analytics.",
+    "projectDescription": "The app is an editor for OpenAPI specs with a built-in REST client. You write a spec in JSON or YAML, the app checks it and shows the list of endpoints. Any endpoint can be tested right away: requests go through our server, so CORS doesn't get in the way. If you are signed in, the app also keeps your request history with some stats.",
     "teamTitle": "Our Team",
     "techTitle": "Technologies",
     "resourcesTitle": "Resources"
