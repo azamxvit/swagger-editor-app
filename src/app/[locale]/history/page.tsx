@@ -1,5 +1,5 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { redirect, notFound } from 'next/navigation';
+import { unauthorized, notFound } from 'next/navigation';
 import { getUser, createClient } from '@/lib/supabase/server';
 import { HistoryListClient } from '@/components/history/HistoryLazy';
 import type { RequestHistoryEntry } from '@/lib/openapi/types';
@@ -15,7 +15,7 @@ export default async function HistoryPage({
 
   const user = await getUser();
   if (!user) {
-    redirect(`/${locale}`);
+    unauthorized();
   }
 
   const supabase = await createClient();

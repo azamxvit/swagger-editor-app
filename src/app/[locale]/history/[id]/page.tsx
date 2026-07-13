@@ -1,7 +1,7 @@
 import { setRequestLocale } from 'next-intl/server';
-import { redirect, notFound } from 'next/navigation';
+import { unauthorized, notFound } from 'next/navigation';
 import { getUser, createClient } from '@/lib/supabase/server';
-import { HistoryDetailView } from '@/components/history/HistoryDetailView';
+import { HistoryDetailLazy } from '@/components/history/HistoryLazy';
 import type { RequestHistoryDetail } from '@/lib/openapi/types';
 
 export default async function HistoryDetailPage({
@@ -14,7 +14,7 @@ export default async function HistoryDetailPage({
 
   const user = await getUser();
   if (!user) {
-    redirect(`/${locale}`);
+    unauthorized();
   }
 
   const supabase = await createClient();
@@ -27,5 +27,5 @@ export default async function HistoryDetailPage({
 
   if (error || !data) notFound();
 
-  return <HistoryDetailView entry={data as RequestHistoryDetail} />;
+  return <HistoryDetailLazy entry={data as RequestHistoryDetail} />;
 }

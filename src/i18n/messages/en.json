@@ -96,7 +96,8 @@
     "generic": "Something went wrong. Please try again.",
     "unauthorized": "You must be signed in to access this page",
     "network": "Network error. Please check your connection.",
-    "proxy": "Failed to execute request"
+    "proxy": "Failed to execute request",
+    "redirecting": "Redirecting to the main page…"
   },
   "footer": {
     "copyright": "Swagger Editor App — RS School Project"
