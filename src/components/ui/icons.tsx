@@ -22,7 +22,6 @@ function Icon({ title, children, ...props }: IconProps & { children: ReactNode }
   );
 }
 
-/** Brand mark — document + check, matches favicon. */
 export function AppLogoIcon({ className, ...props }: IconProps) {
   return (
     <svg

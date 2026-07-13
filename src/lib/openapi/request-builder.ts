@@ -74,7 +74,6 @@ export function getRequestBodyExample(endpoint: OpenAPIEndpoint): string {
   return JSON.stringify(value, null, 2);
 }
 
-/** Prefer real example/default/enum over the schema type name ("string"). */
 export function getParamExample(param: OpenAPIParameter): string {
   if (param.example !== undefined && param.example !== null) {
     return String(param.example);

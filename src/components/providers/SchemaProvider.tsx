@@ -79,7 +79,6 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
       .then((res) => (res.ok ? res.json() : null))
       .then(async (data) => {
         if (cancelled) return;
-        // Old demos still point at dead petstore3 — replace with working sample.
         if (
           typeof data?.content === 'string' &&
           data.content.includes('petstore3.swagger.io')
