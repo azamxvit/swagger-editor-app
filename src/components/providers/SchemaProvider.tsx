@@ -77,9 +77,21 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
     let cancelled = false;
     fetch('/api/schema')
       .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
+      .then(async (data) => {
         if (cancelled) return;
-        if (data?.content) {
+        // Old demos still point at dead petstore3 — replace with working sample.
+        if (
+          typeof data?.content === 'string' &&
+          data.content.includes('petstore3.swagger.io')
+        ) {
+          setContentState(DEFAULT_SCHEMA);
+          setFormatState('yaml');
+          await fetch('/api/schema', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: DEFAULT_SCHEMA, format: 'yaml' }),
+          });
+        } else if (data?.content) {
           setContentState(data.content);
           if (data.format) setFormatState(data.format);
         }
