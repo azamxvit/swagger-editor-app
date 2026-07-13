@@ -4,8 +4,7 @@ An OpenAPI/Swagger editor with a built-in REST client, made with Next.js. You wr
 
 ## Live Demo
 
-<!-- Replace with your deployed URL after deployment -->
-**[Deployed App](https://your-app.vercel.app)**
+**[Deployed App](https://swagger-editor-app-smoky.vercel.app)**
 
 ## What it does
 
