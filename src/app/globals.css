@@ -1,0 +1,190 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Base colors - Light mode */
+  --background: #f7f7f7;
+  --foreground: #171717;
+  --muted: #6b7280;
+  --muted-foreground: #6b7280;
+  --card: #ffffff;
+  --card-foreground: #171717;
+
+  /* Primary colors */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-foreground: #fafafa;
+
+  /* Secondary colors */
+  --secondary: #f4f4f5;
+  --secondary-foreground: #171717;
+
+  /* Accent colors */
+  --accent: #f4f4f5;
+  --accent-foreground: #171717;
+  --accent-brand: #e07b5c;
+  --accent-brand-hover: #d06a4b;
+  --purple: #8b5cf6;
+  --yellow: #fcd34d;
+  --cyan: #22d3ee;
+
+  /* Semantic status colors */
+  --success: #10b981;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+
+  /* Surfaces (panels, inputs, hover states) */
+  --surface: #ffffff;
+  --surface-hover: #f4f4f5;
+
+  /* Border and rings */
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --ring: #6366f1;
+
+  /* Popover */
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+
+  /* Radius tokens */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadow tokens */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.dark {
+  /* Base colors - Dark mode */
+  --background: #0f1117;
+  --foreground: #e4e4e7;
+  --muted: #9ca3af;
+  --muted-foreground: #9ca3af;
+  --card: #181b24;
+  --card-foreground: #e4e4e7;
+  --popover: #181b24;
+  --popover-foreground: #e4e4e7;
+
+  /* Primary colors */
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --primary-foreground: #fafafa;
+
+  /* Secondary colors */
+  --secondary: #1f2330;
+  --secondary-foreground: #e4e4e7;
+
+  /* Accent colors */
+  --accent: #1f2330;
+  --accent-foreground: #e4e4e7;
+
+  /* Semantic status colors */
+  --success: #34d399;
+  --destructive: #f87171;
+  --destructive-foreground: #fafafa;
+
+  /* Surfaces */
+  --surface: #181b24;
+  --surface-hover: #1f2330;
+
+  /* Border and rings */
+  --border: #2a2f3d;
+  --input: #2a2f3d;
+  --ring: #818cf8;
+}
+
+@theme inline {
+  /* Color tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-brand: var(--accent-brand);
+  --color-accent-brand-hover: var(--accent-brand-hover);
+  --color-success: var(--success);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-purple: var(--purple);
+  --color-yellow: var(--yellow);
+  --color-cyan: var(--cyan);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Font tokens */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Radius tokens */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+
+  /* Shadow tokens */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-surface-hover disabled:opacity-50;
+  }
+
+  .input {
+    @apply w-full rounded-lg border border-input bg-surface px-3 py-2 text-sm text-foreground placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring;
+  }
+
+  .label {
+    @apply mb-1 block text-sm font-medium text-foreground;
+  }
+
+  .error-text {
+    @apply mt-1 text-xs text-destructive;
+  }
+
+  .sr-only {
+    @apply absolute h-px w-px overflow-hidden whitespace-nowrap border-0 p-0;
+    clip: rect(0, 0, 0, 0);
+    margin: -1px;
+  }
+}

@@ -1,11 +1,9 @@
 ## Pull Request: Swagger Editor App
 
 ### Deployed App
-<!-- Add your deployment URL here -->
-[Demo Link]()
+[Demo Link](https://swagger-editor-app-smoky.vercel.app)
 
 ### YouTube Video
-<!-- Add your 5-7 minute walkthrough video -->
 [Video Link]()
 
 ## Description
