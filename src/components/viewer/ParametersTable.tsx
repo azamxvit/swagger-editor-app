@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import type { OpenAPIParameter } from '@/lib/openapi/types';
+import { getParamExample } from '@/lib/openapi/request-builder';
 
 interface ParametersTableProps {
   parameters: OpenAPIParameter[];
@@ -43,11 +44,7 @@ export function ParametersTable({ parameters }: ParametersTableProps) {
                 )}
               </td>
               <td className="py-1.5 font-mono text-[var(--muted)]">
-                {param.example !== undefined
-                  ? String(param.example)
-                  : param.schema?.type
-                    ? String(param.schema.type)
-                    : '—'}
+                {getParamExample(param) || '—'}
               </td>
             </tr>
           ))}

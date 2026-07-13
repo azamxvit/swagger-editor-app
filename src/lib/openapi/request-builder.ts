@@ -74,6 +74,23 @@ export function getRequestBodyExample(endpoint: OpenAPIEndpoint): string {
   return JSON.stringify(value, null, 2);
 }
 
+/** Prefer real example/default/enum over the schema type name ("string"). */
+export function getParamExample(param: OpenAPIParameter): string {
+  if (param.example !== undefined && param.example !== null) {
+    return String(param.example);
+  }
+  const schema = param.schema ?? {};
+  if (schema.default !== undefined && schema.default !== null) {
+    return String(schema.default);
+  }
+  if (Array.isArray(schema.enum) && schema.enum.length > 0) {
+    return String(schema.enum[0]);
+  }
+  if (schema.type === 'integer' || schema.type === 'number') return '1';
+  if (schema.type === 'boolean') return 'true';
+  return '';
+}
+
 export function resolveEndpointBaseUrl(
   endpoint: OpenAPIEndpoint,
   fallback?: string,

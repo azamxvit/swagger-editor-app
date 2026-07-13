@@ -4,6 +4,7 @@ import {
   buildRequestUrl,
   buildRequestHeaders,
   getMissingRequiredParams,
+  getParamExample,
   getRequestBodyExample,
   resolveEndpointBaseUrl,
 } from './request-builder';
@@ -69,5 +70,30 @@ describe('request-builder', () => {
     expect(resolveEndpointBaseUrl(endpoint, 'https://fallback')).toBe(
       'https://pets.example.com',
     );
+  });
+
+  it('prefers example over schema type for placeholders', () => {
+    expect(
+      getParamExample({
+        name: 'status',
+        in: 'query',
+        schema: { type: 'string', enum: ['available', 'pending'] },
+        example: 'available',
+      }),
+    ).toBe('available');
+    expect(
+      getParamExample({
+        name: 'status',
+        in: 'query',
+        schema: { type: 'string', enum: ['available', 'pending'] },
+      }),
+    ).toBe('available');
+    expect(
+      getParamExample({
+        name: 'petId',
+        in: 'path',
+        schema: { type: 'integer' },
+      }),
+    ).toBe('1');
   });
 });

@@ -8,6 +8,7 @@ import {
   buildRequestHeaders,
   buildRequestUrl,
   getMissingRequiredParams,
+  getParamExample,
   getRequestBodyExample,
   resolveEndpointBaseUrl,
 } from '@/lib/openapi/request-builder';
@@ -144,8 +145,8 @@ export function TryItOut({ endpoint, baseUrl }: TryItOutProps) {
                 className="input flex-1 text-xs"
                 placeholder={
                   param.in === 'path'
-                    ? `{${param.name}}`
-                    : (param.example?.toString() ?? param.schema?.type?.toString() ?? '')
+                    ? getParamExample(param) || `{${param.name}}`
+                    : getParamExample(param) || param.name
                 }
                 value={paramValues[param.name] ?? ''}
                 onChange={(e) =>
