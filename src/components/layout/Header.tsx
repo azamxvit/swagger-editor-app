@@ -5,11 +5,12 @@ import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { HeaderAuthSkeleton } from '@/components/ui/Skeleton';
 import toast from 'react-hot-toast';
 
 export function Header() {
   const t = useTranslations();
-  const { user, signOut } = useAuth();
+  const { user, loading, signOut } = useAuth();
   const router = useRouter();
   const [isSticky, setIsSticky] = useState(false);
 
@@ -29,20 +30,20 @@ export function Header() {
     <header
       className={`sticky top-0 z-50 border-b transition-all duration-300 ${
         isSticky
-          ? 'border-[var(--border)] bg-[var(--surface)]/95 backdrop-blur-md shadow-sm py-2'
+          ? 'border-[var(--border)] bg-[var(--surface)]/95 py-2 shadow-sm backdrop-blur-md'
           : 'border-transparent bg-[var(--background)] py-4'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 font-semibold text-lg">
+          <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
             <span className="text-[var(--primary)]">⚡</span>
             <span>{t('app.title')}</span>
           </Link>
-          <nav className="hidden sm:flex items-center gap-4 text-sm">
+          <nav className="hidden items-center gap-4 text-sm sm:flex">
             <Link
               href="/about"
-              className="text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+              className="text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
             >
               {t('nav.about')}
             </Link>
@@ -51,12 +52,11 @@ export function Header() {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
-          {user ? (
+          {loading ? (
+            <HeaderAuthSkeleton />
+          ) : user ? (
             <>
-              <Link
-                href="/history"
-                className="btn-secondary text-sm"
-              >
+              <Link href="/history" className="btn-secondary text-sm">
                 {t('nav.history')}
               </Link>
               <button type="button" onClick={handleSignOut} className="btn-primary text-sm">

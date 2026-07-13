@@ -48,7 +48,7 @@ describe('Header', () => {
   });
 
   it('shows Sign In and Sign Up for guests', () => {
-    mockUseAuth.mockReturnValue({ user: null, signOut: vi.fn() });
+    mockUseAuth.mockReturnValue({ user: null, loading: false, signOut: vi.fn() });
     renderHeader();
     expect(screen.getByText('Sign In')).toBeInTheDocument();
     expect(screen.getByText('Sign Up')).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('Header', () => {
   });
 
   it('shows History and Sign Out for authenticated users', () => {
-    mockUseAuth.mockReturnValue({ user: { id: 'u1' } as User, signOut: vi.fn() });
+    mockUseAuth.mockReturnValue({ user: { id: 'u1' } as User, loading: false, signOut: vi.fn() });
     renderHeader();
     expect(screen.getByText('History')).toBeInTheDocument();
     expect(screen.getByText('Sign Out')).toBeInTheDocument();
@@ -64,8 +64,15 @@ describe('Header', () => {
   });
 
   it('always shows the About link', () => {
-    mockUseAuth.mockReturnValue({ user: null, signOut: vi.fn() });
+    mockUseAuth.mockReturnValue({ user: null, loading: false, signOut: vi.fn() });
     renderHeader();
     expect(screen.getByText('About')).toBeInTheDocument();
+  });
+
+  it('shows auth skeleton while loading', () => {
+    mockUseAuth.mockReturnValue({ user: null, loading: true, signOut: vi.fn() });
+    const { container } = renderHeader();
+    expect(screen.queryByText('Sign In')).not.toBeInTheDocument();
+    expect(container.querySelector('.animate-pulse')).toBeTruthy();
   });
 });

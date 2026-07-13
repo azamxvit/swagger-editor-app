@@ -38,23 +38,28 @@ const testUser = { id: 'u1', email: 'user@example.com' } as User;
 
 describe('AuthProvider', () => {
   beforeEach(() => {
-    mocks.getUser.mockReset();
+    mocks.getUser.mockReset().mockResolvedValue({ data: { user: null } });
     mocks.signOut.mockReset().mockResolvedValue({ error: null });
     mocks.onAuthStateChange
       .mockReset()
       .mockReturnValue({ data: { subscription: { unsubscribe: vi.fn() } } });
   });
 
-  it('exposes the initial user', () => {
+  it('exposes the initial user', async () => {
+    mocks.getUser.mockResolvedValue({ data: { user: testUser } });
     render(
       <AuthProvider initialUser={testUser}>
         <Consumer />
       </AuthProvider>,
     );
     expect(screen.getByTestId('user').textContent).toBe('user@example.com');
+    await waitFor(() => {
+      expect(screen.getByTestId('user').textContent).toBe('user@example.com');
+    });
   });
 
   it('clears the user on sign out', async () => {
+    mocks.getUser.mockResolvedValue({ data: { user: testUser } });
     render(
       <AuthProvider initialUser={testUser}>
         <Consumer />
@@ -68,7 +73,9 @@ describe('AuthProvider', () => {
   });
 
   it('refreshes the user from supabase', async () => {
-    mocks.getUser.mockResolvedValue({ data: { user: testUser } });
+    mocks.getUser
+      .mockResolvedValueOnce({ data: { user: null } })
+      .mockResolvedValueOnce({ data: { user: testUser } });
     render(
       <AuthProvider initialUser={null}>
         <Consumer />
