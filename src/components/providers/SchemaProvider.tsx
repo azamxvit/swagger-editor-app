@@ -103,7 +103,7 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
         spec,
         isValid: errors.length === 0 && spec !== null,
         isValidating,
-        isLoading: Boolean(user) && loadedUserId !== user.id,
+        isLoading: user !== null && loadedUserId !== user.id,
         setContent,
         setFormat,
         validate,
