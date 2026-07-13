@@ -30,7 +30,7 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
   const [errors, setErrors] = useState<string[]>([]);
   const [spec, setSpec] = useState<ParsedOpenAPISpec | null>(null);
   const [isValidating, setIsValidating] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const [loadedUserId, setLoadedUserId] = useState<string | null>(null);
 
   const validate = useCallback(async () => {
     setIsValidating(true);
@@ -71,22 +71,28 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
   }, [content, validate]);
 
   useEffect(() => {
-    if (!user) {
-      setLoaded(true);
-      return;
-    }
-    if (loaded) return;
+    if (!user) return;
+    if (loadedUserId === user.id) return;
+
+    let cancelled = false;
     fetch('/api/schema')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
+        if (cancelled) return;
         if (data?.content) {
           setContentState(data.content);
           if (data.format) setFormatState(data.format);
         }
-        setLoaded(true);
+        setLoadedUserId(user.id);
       })
-      .catch(() => setLoaded(true));
-  }, [user, loaded]);
+      .catch(() => {
+        if (!cancelled) setLoadedUserId(user.id);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user, loadedUserId]);
 
   return (
     <SchemaContext.Provider
@@ -97,7 +103,7 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
         spec,
         isValid: errors.length === 0 && spec !== null,
         isValidating,
-        isLoading: Boolean(user) && !loaded,
+        isLoading: Boolean(user) && loadedUserId !== user.id,
         setContent,
         setFormat,
         validate,

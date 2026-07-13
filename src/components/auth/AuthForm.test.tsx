@@ -51,6 +51,7 @@ const messages = {
     passwordPlaceholder: 'Min. 8 chars, letter, digit, symbol',
     confirmPasswordPlaceholder: 'Repeat your password',
     passwordHint: 'Use at least 8 characters with a letter, digit and special symbol.',
+    passwordRulesTitle: 'Password requirements',
     ruleLength: 'At least 8 characters',
     ruleLetter: 'At least one letter',
     ruleDigit: 'At least one digit',

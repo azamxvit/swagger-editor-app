@@ -13,29 +13,46 @@ export function HistoryList({ entries }: HistoryListProps) {
 
   if (entries.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 text-center">
+      <section className="flex flex-col items-center justify-center py-16 text-center" aria-live="polite">
         <p className="text-lg text-[var(--muted)]">{t('empty')}</p>
         <p className="mt-2 text-sm text-[var(--muted)]">{t('emptyHint')}</p>
         <Link href="/" className="btn-primary mt-6">
           {t('goToEditor')}
         </Link>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className="overflow-x-auto">
+    <section className="overflow-x-auto" aria-label={t('title')}>
       <table className="w-full text-sm">
+        <caption className="sr-only">{t('title')}</caption>
         <thead>
           <tr className="border-b border-[var(--border)] text-left text-[var(--muted)]">
-            <th className="px-4 py-3">{t('timestamp')}</th>
-            <th className="px-4 py-3">{t('method')}</th>
-            <th className="px-4 py-3">{t('endpoint')}</th>
-            <th className="px-4 py-3">{t('status')}</th>
-            <th className="px-4 py-3">{t('duration')}</th>
-            <th className="px-4 py-3">{t('requestSize')}</th>
-            <th className="px-4 py-3">{t('responseSize')}</th>
-            <th className="px-4 py-3"></th>
+            <th scope="col" className="px-4 py-3">
+              {t('timestamp')}
+            </th>
+            <th scope="col" className="px-4 py-3">
+              {t('method')}
+            </th>
+            <th scope="col" className="px-4 py-3">
+              {t('endpoint')}
+            </th>
+            <th scope="col" className="px-4 py-3">
+              {t('status')}
+            </th>
+            <th scope="col" className="px-4 py-3">
+              {t('duration')}
+            </th>
+            <th scope="col" className="px-4 py-3">
+              {t('requestSize')}
+            </th>
+            <th scope="col" className="px-4 py-3">
+              {t('responseSize')}
+            </th>
+            <th scope="col" className="px-4 py-3">
+              <span className="sr-only">{t('details')}</span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -74,7 +91,7 @@ export function HistoryList({ entries }: HistoryListProps) {
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 }
 

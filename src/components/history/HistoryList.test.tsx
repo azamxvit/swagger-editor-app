@@ -12,6 +12,7 @@ vi.mock('@/i18n/routing', () => ({
 
 const messages = {
   history: {
+    title: 'History & Analytics',
     empty: "You haven't executed any requests yet",
     emptyHint: 'Use the Editor and Viewer',
     goToEditor: 'Go to Editor',

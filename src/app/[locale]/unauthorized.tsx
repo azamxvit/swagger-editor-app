@@ -14,10 +14,12 @@ export default function UnauthorizedPage() {
   }, [router]);
 
   return (
-    <main className="flex flex-col items-center justify-center py-24 text-center">
-      <h1 className="text-4xl font-bold">401</h1>
+    <section className="flex flex-col items-center justify-center py-24 text-center" aria-labelledby="unauthorized-title">
+      <h1 id="unauthorized-title" className="text-4xl font-bold">
+        401
+      </h1>
       <p className="mt-4 text-lg">{t('unauthorized')}</p>
       <p className="mt-2 text-sm text-[var(--muted)]">{t('redirecting')}</p>
-    </main>
+    </section>
   );
 }

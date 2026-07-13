@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 
 interface PasswordRequirementsProps {
   password: string;
+  id?: string;
 }
 
 function Requirement({ ok, label }: { ok: boolean; label: string }) {
@@ -15,7 +16,7 @@ function Requirement({ ok, label }: { ok: boolean; label: string }) {
   );
 }
 
-export function PasswordRequirements({ password }: PasswordRequirementsProps) {
+export function PasswordRequirements({ password, id }: PasswordRequirementsProps) {
   const t = useTranslations('auth');
   const value = password ?? '';
 
@@ -27,11 +28,20 @@ export function PasswordRequirements({ password }: PasswordRequirementsProps) {
   };
 
   return (
-    <ul className="mt-2 space-y-1 rounded-md border border-[var(--border)] bg-[var(--surface)] p-3">
-      <Requirement ok={checks.length} label={t('ruleLength')} />
-      <Requirement ok={checks.letter} label={t('ruleLetter')} />
-      <Requirement ok={checks.digit} label={t('ruleDigit')} />
-      <Requirement ok={checks.special} label={t('ruleSpecial')} />
-    </ul>
+    <section
+      id={id}
+      aria-label={t('passwordRulesTitle')}
+      className="mt-2 rounded-md border border-[var(--border)] bg-[var(--surface)] p-3"
+    >
+      <h2 className="mb-2 text-xs font-semibold text-[var(--foreground)]">
+        {t('passwordRulesTitle')}
+      </h2>
+      <ul className="space-y-1">
+        <Requirement ok={checks.length} label={t('ruleLength')} />
+        <Requirement ok={checks.letter} label={t('ruleLetter')} />
+        <Requirement ok={checks.digit} label={t('ruleDigit')} />
+        <Requirement ok={checks.special} label={t('ruleSpecial')} />
+      </ul>
+    </section>
   );
 }

@@ -34,7 +34,8 @@
     "ruleDigit": "At least one digit",
     "ruleSpecial": "At least one special character (!@#$…)",
     "charCount": "{count} characters",
-    "submitting": "Please wait…"
+    "submitting": "Please wait…",
+    "passwordRulesTitle": "Password requirements"
   },
   "editor": {
     "title": "Editor",

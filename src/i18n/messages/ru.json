@@ -34,7 +34,8 @@
     "ruleDigit": "Хотя бы одна цифра",
     "ruleSpecial": "Хотя бы один спецсимвол (!@#$…)",
     "charCount": "{count} символов",
-    "submitting": "Подождите…"
+    "submitting": "Подождите…",
+    "passwordRulesTitle": "Требования к паролю"
   },
   "editor": {
     "title": "Редактор",

@@ -26,55 +26,64 @@ export function SwaggerViewerPanel() {
 
   if (!spec) {
     return (
-      <div className="flex h-full items-center justify-center p-6 text-center text-[var(--muted)]">
-        {t('noSpec')}
-      </div>
+      <section className="flex h-full items-center justify-center p-6 text-center text-[var(--muted)]">
+        <p>{t('noSpec')}</p>
+      </section>
     );
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="border-b border-[var(--border)] px-4 py-2">
-        <h2 className="font-semibold">{spec.title}</h2>
+    <section className="flex h-full flex-col" aria-labelledby="viewer-title">
+      <header className="border-b border-[var(--border)] px-4 py-2">
+        <h2 id="viewer-title" className="font-semibold">
+          {spec.title}
+        </h2>
         <p className="text-xs text-[var(--muted)]">
           v{spec.version}
           {spec.baseUrl && ` · ${spec.baseUrl}`}
         </p>
-      </div>
+      </header>
 
-      <div className="flex flex-1 min-h-0">
-        <div className="w-1/3 min-w-[200px] overflow-y-auto border-r border-[var(--border)]">
-          {spec.endpoints.map((endpoint) => (
-            <button
-              key={endpoint.id}
-              type="button"
-              onClick={() => setSelected(endpoint)}
-              className={`flex w-full items-center gap-2 border-b border-[var(--border)] px-3 py-2 text-left text-sm hover:bg-[var(--surface-hover)] transition-colors ${
-                selected?.id === endpoint.id ? 'bg-[var(--surface-hover)]' : ''
-              }`}
-            >
-              <span
-                className={`shrink-0 rounded border px-1.5 py-0.5 text-xs font-mono font-bold ${
-                  METHOD_COLORS[endpoint.method] ?? 'bg-gray-500/20 text-gray-400'
-                }`}
-              >
-                {endpoint.method}
-              </span>
-              <span className="truncate font-mono text-xs">{endpoint.path}</span>
-            </button>
-          ))}
-        </div>
+      <div className="flex min-h-0 flex-1">
+        <nav
+          aria-label={t('title')}
+          className="w-1/3 min-w-[200px] overflow-y-auto border-r border-[var(--border)]"
+        >
+          <ul className="m-0 list-none p-0">
+            {spec.endpoints.map((endpoint) => (
+              <li key={endpoint.id}>
+                <button
+                  type="button"
+                  onClick={() => setSelected(endpoint)}
+                  aria-current={selected?.id === endpoint.id ? 'true' : undefined}
+                  className={`flex w-full items-center gap-2 border-b border-[var(--border)] px-3 py-2 text-left text-sm transition-colors hover:bg-[var(--surface-hover)] ${
+                    selected?.id === endpoint.id ? 'bg-[var(--surface-hover)]' : ''
+                  }`}
+                >
+                  <span
+                    className={`shrink-0 rounded border px-1.5 py-0.5 font-mono text-xs font-bold ${
+                      METHOD_COLORS[endpoint.method] ?? 'bg-gray-500/20 text-gray-400'
+                    }`}
+                  >
+                    {endpoint.method}
+                  </span>
+                  <span className="truncate font-mono text-xs">{endpoint.path}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-        <div className="flex-1 overflow-y-auto">
+        <article className="flex-1 overflow-y-auto">
           {selected ? (
             <EndpointDetail endpoint={selected} baseUrl={spec.baseUrl} />
           ) : (
-            <div className="flex h-full items-center justify-center text-[var(--muted)]">
+            <p className="flex h-full items-center justify-center text-[var(--muted)]">
               {t('selectEndpoint')}
-            </div>
+            </p>
           )}
-        </div>
+        </article>
       </div>
-    </div>
+    </section>
   );
 }

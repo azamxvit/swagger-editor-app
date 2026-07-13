@@ -117,16 +117,22 @@ export function TryItOut({ endpoint, baseUrl }: TryItOutProps) {
   };
 
   return (
-    <section className="space-y-3 rounded border border-[var(--border)] bg-[var(--surface)] p-3">
-      <h3 className="text-sm font-semibold">{t('tryItOut')}</h3>
+    <section className="space-y-3 rounded border border-[var(--border)] bg-[var(--surface)] p-3" aria-labelledby="try-it-out-title">
+      <h3 id="try-it-out-title" className="text-sm font-semibold">
+        {t('tryItOut')}
+      </h3>
 
       {endpoint.parameters.length === 0 ? (
         <p className="text-xs text-[var(--muted)]">{t('noParameters')}</p>
       ) : (
-        <div className="space-y-2">
+        <fieldset className="m-0 space-y-2 border-0 p-0">
+          <legend className="sr-only">{t('parameters')}</legend>
           {endpoint.parameters.map((param) => (
-            <div key={`${param.in}-${param.name}`} className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
-              <label className="min-w-28 text-xs">
+            <p
+              key={`${param.in}-${param.name}`}
+              className="m-0 flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3"
+            >
+              <label className="min-w-28 text-xs" htmlFor={`param-${param.in}-${param.name}`}>
                 <span className="font-mono">{param.name}</span>
                 <span className="ml-2 text-[var(--muted)]">
                   ({paramTypeLabel(param.in)}
@@ -134,7 +140,8 @@ export function TryItOut({ endpoint, baseUrl }: TryItOutProps) {
                 </span>
               </label>
               <input
-                className="input text-xs flex-1"
+                id={`param-${param.in}-${param.name}`}
+                className="input flex-1 text-xs"
                 placeholder={
                   param.in === 'path'
                     ? `{${param.name}}`
@@ -145,27 +152,28 @@ export function TryItOut({ endpoint, baseUrl }: TryItOutProps) {
                   setParamValues((prev) => ({ ...prev, [param.name]: e.target.value }))
                 }
               />
-            </div>
+            </p>
           ))}
-        </div>
+        </fieldset>
       )}
 
       {hasBody && endpoint.requestBody && (
-        <div className="space-y-2">
-          <h4 className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
+        <fieldset className="m-0 space-y-2 border-0 p-0">
+          <legend className="text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
             {t('requestBody')}
-          </h4>
+          </legend>
           {example && example !== '{}' && (
             <div>
               <button
                 type="button"
                 className="text-xs text-[var(--muted)] hover:text-[var(--foreground)]"
                 onClick={() => setShowExample((prev) => !prev)}
+                aria-expanded={showExample}
               >
                 {showExample ? `▼ ${t('hideExample')}` : `▶ ${t('exampleFromSpec')}`}
               </button>
               {showExample && (
-                <pre className="mt-1 max-h-40 overflow-auto rounded bg-[var(--background)] p-2 text-xs font-mono">
+                <pre className="mt-1 max-h-40 overflow-auto rounded bg-[var(--background)] p-2 font-mono text-xs">
                   {example}
                 </pre>
               )}
@@ -177,38 +185,48 @@ export function TryItOut({ endpoint, baseUrl }: TryItOutProps) {
             onChange={(e) => handleBodyChange(e.target.value)}
             placeholder={t('enterJsonBody')}
             spellCheck={false}
+            aria-invalid={Boolean(bodyError)}
+            aria-describedby={bodyError ? 'body-error' : undefined}
           />
-          {bodyError && <p className="text-xs text-red-400">{bodyError}</p>}
-        </div>
+          {bodyError && (
+            <strong id="body-error" className="block text-xs font-normal text-red-400">
+              {bodyError}
+            </strong>
+          )}
+        </fieldset>
       )}
 
       {requestUrl && (
-        <div className="rounded border border-[var(--border)] bg-[var(--background)] p-2">
+        <aside className="rounded border border-[var(--border)] bg-[var(--background)] p-2" aria-label={t('requestUrl')}>
           <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--muted)]">
             {t('requestUrl')}
           </p>
           <code className="block break-all font-mono text-xs text-[var(--primary)]">
             {requestUrl}
           </code>
-        </div>
+        </aside>
       )}
 
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={handleExecute}
-          disabled={executing}
-          className="btn-primary text-sm"
-        >
-          {executing ? t('executing') : t('execute')}
-        </button>
-        <CurlPanel
-          method={endpoint.method}
-          url={requestUrl}
-          headers={requestHeaders}
-          body={hasBody ? body : undefined}
-        />
-      </div>
+      <menu className="m-0 flex list-none flex-wrap items-center gap-2 p-0">
+        <li>
+          <button
+            type="button"
+            onClick={handleExecute}
+            disabled={executing}
+            className="btn-primary text-sm"
+          >
+            {executing ? t('executing') : t('execute')}
+          </button>
+        </li>
+        <li>
+          <CurlPanel
+            method={endpoint.method}
+            url={requestUrl}
+            headers={requestHeaders}
+            body={hasBody ? body : undefined}
+          />
+        </li>
+      </menu>
 
       {response && (
         <ResponseResult

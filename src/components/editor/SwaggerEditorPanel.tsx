@@ -52,15 +52,22 @@ export function SwaggerEditorPanel() {
   }
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-2">
-        <h2 className="font-semibold">{t('title')}</h2>
+    <section className="flex h-full flex-col" aria-labelledby="editor-title">
+      <header className="flex items-center justify-between border-b border-[var(--border)] px-4 py-2">
+        <h2 id="editor-title" className="font-semibold">
+          {t('title')}
+        </h2>
         <div className="flex items-center gap-2">
-          <div className="flex overflow-hidden rounded-lg border border-[var(--border)] text-xs">
+          <div
+            role="group"
+            aria-label={t('format')}
+            className="flex overflow-hidden rounded-lg border border-[var(--border)] text-xs"
+          >
             <button
               type="button"
               onClick={() => handleFormatToggle('json')}
               className={`px-3 py-1 ${format === 'json' ? 'bg-[var(--primary)] text-white' : ''}`}
+              aria-pressed={format === 'json'}
             >
               {t('json')}
             </button>
@@ -68,6 +75,7 @@ export function SwaggerEditorPanel() {
               type="button"
               onClick={() => handleFormatToggle('yaml')}
               className={`px-3 py-1 ${format === 'yaml' ? 'bg-[var(--primary)] text-white' : ''}`}
+              aria-pressed={format === 'yaml'}
             >
               {t('yaml')}
             </button>
@@ -78,9 +86,9 @@ export function SwaggerEditorPanel() {
             </button>
           )}
         </div>
-      </div>
+      </header>
 
-      <div className="min-h-0 flex-1">
+      <div className="min-h-0 flex-1" role="textbox" aria-label={t('title')}>
         <MonacoEditor
           height="100%"
           language={format === 'json' ? 'json' : 'yaml'}
@@ -97,13 +105,13 @@ export function SwaggerEditorPanel() {
         />
       </div>
 
-      <div className="border-t border-[var(--border)] px-4 py-2 text-xs">
+      <footer className="border-t border-[var(--border)] px-4 py-2 text-xs" aria-live="polite">
         {isValidating ? (
           <span className="text-[var(--muted)]">{t('validating')}</span>
         ) : isValid ? (
           <span className="text-emerald-500">{t('valid')}</span>
         ) : (
-          <div className="text-red-400">
+          <div className="text-red-400" role="alert">
             <span>{t('invalid')}</span>
             {errors.map((err) => (
               <p key={err} className="mt-1 truncate">
@@ -112,7 +120,7 @@ export function SwaggerEditorPanel() {
             ))}
           </div>
         )}
-      </div>
-    </div>
+      </footer>
+    </section>
   );
 }

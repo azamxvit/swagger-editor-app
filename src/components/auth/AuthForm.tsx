@@ -66,68 +66,110 @@ export function AuthForm({ mode }: AuthFormProps) {
   };
 
   return (
-    <div className="mx-auto w-full max-w-md">
-      <h1 className="mb-6 text-center text-2xl font-bold">
+    <section className="mx-auto w-full max-w-md" aria-labelledby="auth-title">
+      <h1 id="auth-title" className="mb-6 text-center text-2xl font-bold">
         {isSignUp ? t('signUpTitle') : t('signInTitle')}
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
-        <div>
-          <label htmlFor="email" className="label">
-            {t('email')}
-          </label>
-          <input
-            id="email"
-            type="email"
-            autoComplete="email"
-            className="input"
-            placeholder={t('emailPlaceholder')}
-            {...register('email')}
-          />
-          {errors.email && <p className="error-text">{errors.email.message}</p>}
-        </div>
+        <fieldset className="space-y-4 border-0 p-0">
+          <legend className="sr-only">
+            {isSignUp ? t('signUpTitle') : t('signInTitle')}
+          </legend>
 
-        <div>
-          <div className="mb-1 flex items-center justify-between gap-2">
-            <label htmlFor="password" className="label mb-0">
-              {t('password')}
-            </label>
-            <span className="text-xs text-[var(--muted)]">
-              {t('charCount', { count: passwordValue.length })}
-            </span>
-          </div>
-          <input
-            id="password"
-            type="password"
-            autoComplete={isSignUp ? 'new-password' : 'current-password'}
-            className="input"
-            placeholder={t('passwordPlaceholder')}
-            {...register('password')}
-          />
-          {errors.password && <p className="error-text">{errors.password.message}</p>}
-          {isSignUp && <PasswordRequirements password={passwordValue} />}
-          {!isSignUp && (
-            <p className="mt-1 text-xs text-[var(--muted)]">{t('passwordHint')}</p>
-          )}
-        </div>
-
-        {isSignUp && (
-          <div>
-            <label htmlFor="confirmPassword" className="label">
-              {t('confirmPassword')}
+          <p className="m-0">
+            <label htmlFor="email" className="label">
+              {t('email')}
             </label>
             <input
-              id="confirmPassword"
-              type="password"
-              autoComplete="new-password"
+              id="email"
+              type="email"
+              autoComplete="email"
               className="input"
-              placeholder={t('confirmPasswordPlaceholder')}
-              {...register('confirmPassword')}
+              placeholder={t('emailPlaceholder')}
+              aria-invalid={Boolean(errors.email)}
+              aria-describedby={errors.email ? 'email-error' : undefined}
+              {...register('email')}
             />
-            {'confirmPassword' in errors && errors.confirmPassword && (
-              <p className="error-text">{errors.confirmPassword.message}</p>
+            {errors.email && (
+              <strong id="email-error" className="error-text font-normal">
+                {errors.email.message}
+              </strong>
             )}
-          </div>
-        )}
+          </p>
+
+          <p className="m-0">
+            <span className="mb-1 flex items-center justify-between gap-2">
+              <label htmlFor="password" className="label mb-0">
+                {t('password')}
+              </label>
+              <output
+                htmlFor="password"
+                className="text-xs text-[var(--muted)]"
+                aria-live="polite"
+              >
+                {t('charCount', { count: passwordValue.length })}
+              </output>
+            </span>
+            <input
+              id="password"
+              type="password"
+              autoComplete={isSignUp ? 'new-password' : 'current-password'}
+              className="input"
+              placeholder={t('passwordPlaceholder')}
+              aria-invalid={Boolean(errors.password)}
+              aria-describedby={
+                isSignUp
+                  ? 'password-requirements'
+                  : errors.password
+                    ? 'password-error'
+                    : 'password-hint'
+              }
+              {...register('password')}
+            />
+            {errors.password && (
+              <strong id="password-error" className="error-text font-normal">
+                {errors.password.message}
+              </strong>
+            )}
+            {isSignUp && (
+              <PasswordRequirements id="password-requirements" password={passwordValue} />
+            )}
+            {!isSignUp && (
+              <small id="password-hint" className="mt-1 block text-xs text-[var(--muted)]">
+                {t('passwordHint')}
+              </small>
+            )}
+          </p>
+
+          {isSignUp && (
+            <p className="m-0">
+              <label htmlFor="confirmPassword" className="label">
+                {t('confirmPassword')}
+              </label>
+              <input
+                id="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                className="input"
+                placeholder={t('confirmPasswordPlaceholder')}
+                aria-invalid={Boolean(
+                  'confirmPassword' in errors && errors.confirmPassword,
+                )}
+                aria-describedby={
+                  'confirmPassword' in errors && errors.confirmPassword
+                    ? 'confirm-error'
+                    : undefined
+                }
+                {...register('confirmPassword')}
+              />
+              {'confirmPassword' in errors && errors.confirmPassword && (
+                <strong id="confirm-error" className="error-text font-normal">
+                  {errors.confirmPassword.message}
+                </strong>
+              )}
+            </p>
+          )}
+        </fieldset>
 
         <button type="submit" disabled={isSubmitting} className="btn-primary w-full">
           {isSubmitting
@@ -147,6 +189,6 @@ export function AuthForm({ mode }: AuthFormProps) {
           {isSignUp ? t('signInButton') : t('signUpButton')}
         </Link>
       </p>
-    </div>
+    </section>
   );
 }

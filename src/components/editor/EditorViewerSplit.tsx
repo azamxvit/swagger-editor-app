@@ -18,22 +18,25 @@ export function EditorViewerSplit() {
   }, []);
 
   return (
-    <div
-      className={`flex flex-1 min-h-0 gap-0 border border-[var(--border)] rounded-lg overflow-hidden ${
+    <section
+      aria-label="Editor and viewer"
+      className={`flex min-h-0 flex-1 gap-0 overflow-hidden rounded-lg border border-[var(--border)] ${
         isLandscape ? 'flex-row' : 'flex-col'
       }`}
       style={{ minHeight: 'calc(100vh - 12rem)' }}
     >
-      <div className={`${isLandscape ? 'w-1/2' : 'h-1/2'} min-h-0 min-w-0`}>
+      <section className={`${isLandscape ? 'w-1/2' : 'h-1/2'} min-h-0 min-w-0`} aria-label="Editor">
         <SwaggerEditorPanel />
-      </div>
+      </section>
       <div
-        className={`${isLandscape ? 'w-px' : 'h-px'} bg-[var(--border)] shrink-0`}
+        className={`${isLandscape ? 'w-px' : 'h-px'} shrink-0 bg-[var(--border)]`}
+        role="separator"
+        aria-orientation={isLandscape ? 'vertical' : 'horizontal'}
       />
-      <div className={`${isLandscape ? 'w-1/2' : 'h-1/2'} min-h-0 min-w-0`}>
+      <section className={`${isLandscape ? 'w-1/2' : 'h-1/2'} min-h-0 min-w-0`} aria-label="Viewer">
         <SwaggerViewerPanel />
-      </div>
-    </div>
+      </section>
+    </section>
   );
 }
 

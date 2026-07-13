@@ -43,24 +43,26 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const t = await getTranslations({ locale, namespace: 'about' });
 
   return (
-    <div className="mx-auto max-w-3xl space-y-10">
-      <h1 className="text-3xl font-bold">{t('title')}</h1>
+    <article className="mx-auto max-w-3xl space-y-10">
+      <header>
+        <h1 className="text-3xl font-bold">{t('title')}</h1>
+      </header>
 
       <section>
         <h2 className="mb-3 text-xl font-semibold">{t('courseTitle')}</h2>
-        <p className="text-[var(--muted)] leading-relaxed">{t('courseDescription')}</p>
+        <p className="leading-relaxed text-[var(--muted)]">{t('courseDescription')}</p>
       </section>
 
       <section>
         <h2 className="mb-3 text-xl font-semibold">{t('projectTitle')}</h2>
-        <p className="text-[var(--muted)] leading-relaxed">{t('projectDescription')}</p>
+        <p className="leading-relaxed text-[var(--muted)]">{t('projectDescription')}</p>
       </section>
 
       <section>
         <h2 className="mb-4 text-xl font-semibold">{t('teamTitle')}</h2>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <ul className="m-0 grid list-none gap-4 p-0 sm:grid-cols-3">
           {TEAM.map((member) => (
-            <div
+            <li
               key={member.name}
               className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4"
             >
@@ -74,23 +76,23 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               >
                 GitHub
               </a>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       <section>
         <h2 className="mb-3 text-xl font-semibold">{t('techTitle')}</h2>
-        <div className="flex flex-wrap gap-2">
+        <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
           {TECHNOLOGIES.map((tech) => (
-            <span
+            <li
               key={tech}
               className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-sm"
             >
               {tech}
-            </span>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       <section>
@@ -111,11 +113,11 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </ul>
       </section>
 
-      <div className="pt-4">
+      <nav className="pt-4" aria-label="Back">
         <Link href="/" className="btn-primary">
           ← Back to Editor
         </Link>
-      </div>
-    </div>
+      </nav>
+    </article>
   );
 }
