@@ -32,7 +32,9 @@ An OpenAPI/Swagger editor with a built-in REST client, made with Next.js. You wr
 
 | Name | Role | GitHub |
 |------|------|--------|
-| Azamat Omirtay | Developer | [@azamxvit](https://github.com/azamxvit) |
+| Azamat Omirtay | Team Lead | [@azamxvit](https://github.com/azamxvit) |
+| Team Member 2 | Developer | [GitHub]() |
+| Team Member 3 | Developer | [GitHub]() |
 
 ## Getting Started
 
@@ -127,4 +129,4 @@ Deploy to [Vercel](https://vercel.com):
 
 ## RS School
 
-Project for the [RS School](https://rs.school/) React course.
+Team project for the [RS School](https://rs.school/) React course.
