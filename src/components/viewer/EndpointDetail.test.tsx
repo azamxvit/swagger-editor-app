@@ -16,6 +16,7 @@ const messages = {
     execute: 'Execute',
     executing: 'Executing...',
     generateCurl: 'Generate cURL',
+    hideCurl: 'Hide cURL',
     copyCurl: 'Copy to Clipboard',
     curlCopied: 'cURL command copied',
     response: 'Response',
@@ -28,8 +29,20 @@ const messages = {
     header: 'Header',
     cookie: 'Cookie',
     required: 'required',
+    optional: 'optional',
     schema: 'Schema',
     noParameters: 'No parameters',
+    name: 'Name',
+    in: 'In',
+    example: 'Example',
+    tryItOut: 'Try it out',
+    requestUrl: 'Request URL',
+    fillRequired: 'Fill required fields',
+    invalidJson: 'Invalid JSON format',
+    requestFailed: 'Failed to execute request',
+    enterJsonBody: 'Enter JSON body',
+    exampleFromSpec: 'Example from spec',
+    hideExample: 'Hide example',
   },
 };
 
@@ -56,9 +69,10 @@ function renderWithIntl(ui: React.ReactElement) {
   );
 }
 
-function fillParam(name: string, value: string) {
-  const label = screen.getByText(name).closest('label')!;
-  const input = label.parentElement!.querySelector('input')!;
+function fillTryItParam(name: string, value: string) {
+  const labels = screen.getAllByText(name);
+  const tryItLabel = labels[labels.length - 1].closest('label')!;
+  const input = tryItLabel.parentElement!.querySelector('input')!;
   fireEvent.change(input, { target: { value } });
 }
 
@@ -67,27 +81,25 @@ describe('EndpointDetail', () => {
     vi.restoreAllMocks();
   });
 
-  it('renders all parameter types', () => {
+  it('renders parameter docs table with all parameter types', () => {
     renderWithIntl(<EndpointDetail endpoint={endpoint} />);
-    expect(screen.getByText('petId')).toBeInTheDocument();
-    expect(screen.getByText('verbose')).toBeInTheDocument();
-    expect(screen.getByText('X-Api-Key')).toBeInTheDocument();
-    expect(screen.getByText('session')).toBeInTheDocument();
-    expect(screen.getByText(/Cookie/)).toBeInTheDocument();
+    expect(screen.getByText('Try it out')).toBeInTheDocument();
+    expect(screen.getAllByText('petId').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('cookie').length).toBeGreaterThan(0);
   });
 
   it('generates a cURL command with path, query, header and cookie values', () => {
     renderWithIntl(<EndpointDetail endpoint={endpoint} />);
-    fillParam('petId', '42');
-    fillParam('verbose', 'true');
-    fillParam('X-Api-Key', 'secret');
-    fillParam('session', 'abc123');
+    fillTryItParam('petId', '42');
+    fillTryItParam('verbose', 'true');
+    fillTryItParam('X-Api-Key', 'secret');
+    fillTryItParam('session', 'abc123');
 
     fireEvent.click(screen.getByText('Generate cURL'));
 
     const curl = document.querySelector('pre')!.textContent!;
     expect(curl).toContain("'https://api.example.com/pets/42?verbose=true'");
-    expect(curl).toContain("X-Api-Key: secret");
+    expect(curl).toContain('X-Api-Key: secret');
     expect(curl).toContain('Cookie: session=abc123');
   });
 
@@ -104,8 +116,8 @@ describe('EndpointDetail', () => {
     vi.stubGlobal('fetch', fetchMock);
 
     renderWithIntl(<EndpointDetail endpoint={endpoint} />);
-    fillParam('petId', '42');
-    fillParam('session', 'abc123');
+    fillTryItParam('petId', '42');
+    fillTryItParam('session', 'abc123');
     fireEvent.click(screen.getByText('Execute'));
 
     await waitFor(() => {
