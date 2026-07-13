@@ -63,7 +63,19 @@
     "example": "Example",
     "schema": "Schema",
     "noParameters": "No parameters",
-    "selectEndpoint": "Select an endpoint to view details"
+    "selectEndpoint": "Select an endpoint to view details",
+    "name": "Name",
+    "in": "In",
+    "optional": "optional",
+    "tryItOut": "Try it out",
+    "hideCurl": "Hide cURL",
+    "invalidJson": "Invalid JSON format",
+    "fillRequired": "Fill required fields",
+    "requestFailed": "Failed to execute request",
+    "requestUrl": "Request URL",
+    "enterJsonBody": "Enter JSON body",
+    "exampleFromSpec": "Example from spec",
+    "hideExample": "Hide example"
   },
   "history": {
     "title": "History & Analytics",

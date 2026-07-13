@@ -63,7 +63,19 @@
     "example": "Пример",
     "schema": "Схема",
     "noParameters": "Нет параметров",
-    "selectEndpoint": "Выберите эндпоинт для просмотра"
+    "selectEndpoint": "Выберите эндпоинт для просмотра",
+    "name": "Имя",
+    "in": "Где",
+    "optional": "необязательный",
+    "tryItOut": "Попробовать",
+    "hideCurl": "Скрыть cURL",
+    "invalidJson": "Неверный формат JSON",
+    "fillRequired": "Заполните обязательные поля",
+    "requestFailed": "Не удалось выполнить запрос",
+    "requestUrl": "URL запроса",
+    "enterJsonBody": "Введите JSON тело",
+    "exampleFromSpec": "Пример из спецификации",
+    "hideExample": "Скрыть пример"
   },
   "history": {
     "title": "История и аналитика",
