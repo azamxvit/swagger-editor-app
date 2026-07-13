@@ -24,7 +24,17 @@
     "signUpSuccess": "Аккаунт создан успешно",
     "signOutSuccess": "Выход выполнен успешно",
     "noAccount": "Нет аккаунта?",
-    "hasAccount": "Уже есть аккаунт?"
+    "hasAccount": "Уже есть аккаунт?",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Мин. 8 символов, буква, цифра, знак",
+    "confirmPasswordPlaceholder": "Повторите пароль",
+    "passwordHint": "Не меньше 8 символов: буква, цифра и спецсимвол.",
+    "ruleLength": "Не меньше 8 символов",
+    "ruleLetter": "Хотя бы одна буква",
+    "ruleDigit": "Хотя бы одна цифра",
+    "ruleSpecial": "Хотя бы один спецсимвол (!@#$…)",
+    "charCount": "{count} символов",
+    "submitting": "Подождите…"
   },
   "editor": {
     "title": "Редактор",
@@ -37,7 +47,8 @@
     "saveError": "Не удалось сохранить схему",
     "valid": "Схема валидна",
     "invalid": "Схема содержит ошибки",
-    "loading": "Загрузка редактора..."
+    "loading": "Загрузка редактора...",
+    "validating": "Проверка…"
   },
   "viewer": {
     "title": "Просмотр",

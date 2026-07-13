@@ -24,7 +24,17 @@
     "signUpSuccess": "Account created successfully",
     "signOutSuccess": "Signed out successfully",
     "noAccount": "Don't have an account?",
-    "hasAccount": "Already have an account?"
+    "hasAccount": "Already have an account?",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Min. 8 chars, letter, digit, symbol",
+    "confirmPasswordPlaceholder": "Repeat your password",
+    "passwordHint": "Use at least 8 characters with a letter, digit and special symbol.",
+    "ruleLength": "At least 8 characters",
+    "ruleLetter": "At least one letter",
+    "ruleDigit": "At least one digit",
+    "ruleSpecial": "At least one special character (!@#$…)",
+    "charCount": "{count} characters",
+    "submitting": "Please wait…"
   },
   "editor": {
     "title": "Editor",
@@ -37,7 +47,8 @@
     "saveError": "Failed to save schema",
     "valid": "Schema is valid",
     "invalid": "Schema has errors",
-    "loading": "Loading editor..."
+    "loading": "Loading editor...",
+    "validating": "Validating…"
   },
   "viewer": {
     "title": "Viewer",

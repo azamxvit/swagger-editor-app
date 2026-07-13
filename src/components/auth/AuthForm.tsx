@@ -13,6 +13,7 @@ import {
   type SignUpFormData,
 } from '@/lib/auth/validation';
 import { useAuth } from '@/components/providers/AuthProvider';
+import { PasswordRequirements } from './PasswordRequirements';
 
 interface AuthFormProps {
   mode: 'sign-in' | 'sign-up';
@@ -29,10 +30,14 @@ export function AuthForm({ mode }: AuthFormProps) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormData | SignUpFormData>({
     resolver: zodResolver(isSignUp ? signUpSchema : signInSchema),
+    mode: 'onChange',
   });
+
+  const passwordValue = watch('password') ?? '';
 
   const onSubmit = async (data: SignInFormData | SignUpFormData) => {
     try {
@@ -62,7 +67,7 @@ export function AuthForm({ mode }: AuthFormProps) {
 
   return (
     <div className="mx-auto w-full max-w-md">
-      <h1 className="mb-6 text-2xl font-bold text-center">
+      <h1 className="mb-6 text-center text-2xl font-bold">
         {isSignUp ? t('signUpTitle') : t('signInTitle')}
       </h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
@@ -75,23 +80,34 @@ export function AuthForm({ mode }: AuthFormProps) {
             type="email"
             autoComplete="email"
             className="input"
+            placeholder={t('emailPlaceholder')}
             {...register('email')}
           />
           {errors.email && <p className="error-text">{errors.email.message}</p>}
         </div>
 
         <div>
-          <label htmlFor="password" className="label">
-            {t('password')}
-          </label>
+          <div className="mb-1 flex items-center justify-between gap-2">
+            <label htmlFor="password" className="label mb-0">
+              {t('password')}
+            </label>
+            <span className="text-xs text-[var(--muted)]">
+              {t('charCount', { count: passwordValue.length })}
+            </span>
+          </div>
           <input
             id="password"
             type="password"
             autoComplete={isSignUp ? 'new-password' : 'current-password'}
             className="input"
+            placeholder={t('passwordPlaceholder')}
             {...register('password')}
           />
           {errors.password && <p className="error-text">{errors.password.message}</p>}
+          {isSignUp && <PasswordRequirements password={passwordValue} />}
+          {!isSignUp && (
+            <p className="mt-1 text-xs text-[var(--muted)]">{t('passwordHint')}</p>
+          )}
         </div>
 
         {isSignUp && (
@@ -104,6 +120,7 @@ export function AuthForm({ mode }: AuthFormProps) {
               type="password"
               autoComplete="new-password"
               className="input"
+              placeholder={t('confirmPasswordPlaceholder')}
               {...register('confirmPassword')}
             />
             {'confirmPassword' in errors && errors.confirmPassword && (
@@ -114,7 +131,7 @@ export function AuthForm({ mode }: AuthFormProps) {
 
         <button type="submit" disabled={isSubmitting} className="btn-primary w-full">
           {isSubmitting
-            ? '...'
+            ? t('submitting')
             : isSignUp
               ? t('signUpButton')
               : t('signInButton')}
