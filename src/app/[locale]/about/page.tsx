@@ -4,18 +4,8 @@ import { Link } from '@/i18n/routing';
 const TEAM = [
   {
     name: 'Azamat Omirtay',
-    role: 'Team Lead',
+    role: 'Developer',
     github: 'https://github.com/azamxvit',
-  },
-  {
-    name: 'Team Member 2',
-    role: 'Developer',
-    github: 'https://github.com/',
-  },
-  {
-    name: 'Team Member 3',
-    role: 'Developer',
-    github: 'https://github.com/',
   },
 ];
 
@@ -58,7 +48,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
       <section>
         <h2 className="mb-4 text-xl font-semibold">{t('teamTitle')}</h2>
-        <div className="grid gap-4 sm:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-1 max-w-sm">
           {TEAM.map((member) => (
             <div
               key={member.name}
