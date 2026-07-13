@@ -4,7 +4,7 @@ import { Link } from '@/i18n/routing';
 const TEAM = [
   {
     name: 'Azamat Omirtay',
-    role: 'Team Lead',
+    role: 'Developer',
     github: 'https://github.com/azamxvit',
   },
   {
