@@ -51,6 +51,12 @@ export function EndpointDetail({ endpoint, baseUrl }: EndpointDetailProps) {
         headers[param.name] = paramValues[param.name];
       }
     }
+    const cookies = endpoint.parameters
+      .filter((p) => p.in === 'cookie' && paramValues[p.name])
+      .map((p) => `${p.name}=${paramValues[p.name]}`);
+    if (cookies.length > 0) {
+      headers['Cookie'] = cookies.join('; ');
+    }
     return headers;
   };
 
