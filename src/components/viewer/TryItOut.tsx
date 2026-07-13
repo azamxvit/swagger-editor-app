@@ -45,6 +45,7 @@ export function TryItOut({ endpoint, baseUrl }: TryItOutProps) {
     endpoint.parameters,
     paramValues,
     resolvedBase,
+    endpoint.method,
   );
   const requestHeaders = buildRequestHeaders(endpoint.parameters, paramValues, {
     includeContentType: hasBody && body.trim().length > 0,

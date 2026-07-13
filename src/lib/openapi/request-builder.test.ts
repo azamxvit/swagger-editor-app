@@ -27,6 +27,19 @@ describe('request-builder', () => {
     expect(url).toBe('https://api.example.com/pets/42?verbose=true');
   });
 
+  it('rewrites broken petstore3 base and GET /pet path', () => {
+    const url = buildRequestUrl(
+      '/pet',
+      [{ name: 'status', in: 'query' }],
+      { status: 'available' },
+      'https://petstore3.swagger.io/api/v3',
+      'GET',
+    );
+    expect(url).toBe(
+      'https://petstore.swagger.io/v2/pet/findByStatus?status=available',
+    );
+  });
+
   it('builds headers including Cookie', () => {
     const headers = buildRequestHeaders(params, {
       'X-Api-Key': 'secret',

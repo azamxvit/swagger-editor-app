@@ -16,14 +16,23 @@ vi.mock('@/lib/openapi/validator', () => ({
 }));
 
 function Consumer() {
-  const { content, format, isValid, setContent, setFormat, saveSchema } = useSchema();
+  const { content, format, isValid, setContent, setFormat, saveSchema, isLoading } = useSchema();
   return (
     <div>
       <span data-testid="format">{format}</span>
       <span data-testid="valid">{String(isValid)}</span>
-      <span data-testid="content">{content.slice(0, 20)}</span>
+      <span data-testid="content">{content.slice(0, 40)}</span>
+      <span data-testid="loading">{String(isLoading)}</span>
       <button type="button" onClick={() => setContent('{"openapi":"3.0.0"}')}>
         set-json
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          setContent('openapi: 3.0.3\nservers:\n  - url: https://petstore3.swagger.io/api/v3\n')
+        }
+      >
+        set-broken
       </button>
       <button type="button" onClick={() => setFormat('json')}>
         set-format
@@ -109,6 +118,37 @@ describe('SchemaProvider', () => {
     await waitFor(() => {
       expect(document.title).toBe('saved:true');
     });
+    const putCall = fetchMock.mock.calls.find(([, opts]) => opts?.method === 'PUT');
+    expect(putCall).toBeDefined();
+  });
+
+  it('repairs petstore3 content on setContent', () => {
+    renderProvider();
+    fireEvent.click(screen.getByText('set-broken'));
+    expect(screen.getByTestId('content').textContent).toContain('openapi: 3.0.3');
+    expect(screen.getByTestId('content').textContent).not.toContain('petstore3');
+  });
+
+  it('migrates saved petstore3 schema for authenticated users', async () => {
+    mocks.useAuth.mockReturnValue({ user: { id: 'u1' } });
+    const fetchMock = vi.fn(async (input: RequestInfo, init?: RequestInit) => {
+      if (!init?.method || init.method === 'GET') {
+        return {
+          ok: true,
+          json: async () => ({
+            content: 'servers:\n  - url: https://petstore3.swagger.io/api/v3\n',
+            format: 'yaml',
+          }),
+        };
+      }
+      return { ok: true, json: async () => null };
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    renderProvider();
+    await waitFor(() => {
+      expect(screen.getByTestId('loading').textContent).toBe('false');
+    });
+    expect(screen.getByTestId('content').textContent).not.toContain('petstore3');
     const putCall = fetchMock.mock.calls.find(([, opts]) => opts?.method === 'PUT');
     expect(putCall).toBeDefined();
   });

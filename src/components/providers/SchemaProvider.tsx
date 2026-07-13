@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import type { ParsedOpenAPISpec, SchemaFormat } from '@/lib/openapi/types';
 import { DEFAULT_SCHEMA } from '@/lib/openapi/default-schema';
+import { repairBrokenDemoSchema } from '@/lib/openapi/demo-schema';
 import { detectFormat } from '@/lib/openapi/converter';
 import { validateOpenAPISpec } from '@/lib/openapi/validator';
 import { useAuth } from './AuthProvider';
@@ -40,14 +41,12 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
     setIsValidating(false);
   }, [content]);
 
-  const setContent = useCallback(
-    (newContent: string) => {
-      setContentState(newContent);
-      const detected = detectFormat(newContent);
-      if (detected) setFormatState(detected);
-    },
-    [],
-  );
+  const setContent = useCallback((newContent: string) => {
+    const repaired = repairBrokenDemoSchema(newContent);
+    setContentState(repaired);
+    const detected = detectFormat(repaired);
+    if (detected) setFormatState(detected);
+  }, []);
 
   const setFormat = useCallback((newFormat: SchemaFormat) => {
     setFormatState(newFormat);
@@ -79,21 +78,23 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
       .then((res) => (res.ok ? res.json() : null))
       .then(async (data) => {
         if (cancelled) return;
-        if (
-          typeof data?.content === 'string' &&
-          data.content.includes('petstore3.swagger.io')
-        ) {
-          setContentState(DEFAULT_SCHEMA);
-          setFormatState('yaml');
-          await fetch('/api/schema', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content: DEFAULT_SCHEMA, format: 'yaml' }),
-          });
-        } else if (data?.content) {
-          setContentState(data.content);
-          if (data.format) setFormatState(data.format);
+
+        if (typeof data?.content === 'string') {
+          const repaired = repairBrokenDemoSchema(data.content);
+          const nextFormat =
+            repaired !== data.content ? 'yaml' : (data.format ?? detectFormat(repaired) ?? 'yaml');
+          setContentState(repaired);
+          setFormatState(nextFormat);
+
+          if (repaired !== data.content) {
+            await fetch('/api/schema', {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ content: repaired, format: nextFormat }),
+            });
+          }
         }
+
         setLoadedUserId(user.id);
       })
       .catch(() => {

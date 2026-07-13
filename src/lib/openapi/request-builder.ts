@@ -1,13 +1,20 @@
 import type { OpenAPIEndpoint, OpenAPIParameter } from './types';
+import {
+  remapBrokenPetstorePath,
+  resolvePetstoreBaseUrl,
+} from './demo-schema';
 
 export function buildRequestUrl(
   path: string,
   parameters: OpenAPIParameter[],
   paramValues: Record<string, string>,
   baseUrl = '',
+  method = 'GET',
 ): string {
-  const base = baseUrl.replace(/\/$/, '');
-  let resolvedPath = path;
+  const base = resolvePetstoreBaseUrl(baseUrl).replace(/\/$/, '');
+  const usesPetstore =
+    baseUrl.includes('petstore.swagger.io') || baseUrl.includes('petstore3.swagger.io');
+  let resolvedPath = usesPetstore ? remapBrokenPetstorePath(method, path) : path;
 
   for (const param of parameters) {
     if (param.in === 'path' && paramValues[param.name]) {
@@ -94,5 +101,5 @@ export function resolveEndpointBaseUrl(
   endpoint: OpenAPIEndpoint,
   fallback?: string,
 ): string {
-  return endpoint.servers?.[0] ?? fallback ?? '';
+  return resolvePetstoreBaseUrl(endpoint.servers?.[0] ?? fallback ?? '');
 }
