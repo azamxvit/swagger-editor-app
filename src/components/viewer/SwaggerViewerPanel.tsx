@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useSchema } from '@/components/providers/SchemaProvider';
 import type { OpenAPIEndpoint } from '@/lib/openapi/types';
 import { EndpointDetail } from './EndpointDetail';
+import { ViewerSkeleton } from '@/components/ui/Skeleton';
 
 const METHOD_COLORS: Record<string, string> = {
   GET: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
@@ -16,8 +17,12 @@ const METHOD_COLORS: Record<string, string> = {
 
 export function SwaggerViewerPanel() {
   const t = useTranslations('viewer');
-  const { spec } = useSchema();
+  const { spec, isValidating, isLoading } = useSchema();
   const [selected, setSelected] = useState<OpenAPIEndpoint | null>(null);
+
+  if (isLoading || (isValidating && !spec)) {
+    return <ViewerSkeleton />;
+  }
 
   if (!spec) {
     return (

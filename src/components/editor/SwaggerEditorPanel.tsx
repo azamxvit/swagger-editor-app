@@ -7,21 +7,27 @@ import { useSchema } from '@/components/providers/SchemaProvider';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { convertFormat } from '@/lib/openapi/converter';
 import type { SchemaFormat } from '@/lib/openapi/types';
+import { EditorSkeleton } from '@/components/ui/Skeleton';
 
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
   ssr: false,
-  loading: () => (
-    <div className="flex h-full items-center justify-center text-[var(--muted)]">
-      Loading editor...
-    </div>
-  ),
+  loading: () => <EditorSkeleton />,
 });
 
 export function SwaggerEditorPanel() {
   const t = useTranslations('editor');
   const { user } = useAuth();
-  const { content, format, errors, isValid, isValidating, setContent, setFormat, saveSchema } =
-    useSchema();
+  const {
+    content,
+    format,
+    errors,
+    isValid,
+    isValidating,
+    isLoading,
+    setContent,
+    setFormat,
+    saveSchema,
+  } = useSchema();
 
   const handleFormatToggle = (newFormat: SchemaFormat) => {
     if (newFormat === format) return;
@@ -41,12 +47,16 @@ export function SwaggerEditorPanel() {
     else toast.error(t('saveError'));
   };
 
+  if (isLoading) {
+    return <EditorSkeleton />;
+  }
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between border-b border-[var(--border)] px-4 py-2">
         <h2 className="font-semibold">{t('title')}</h2>
         <div className="flex items-center gap-2">
-          <div className="flex rounded-lg border border-[var(--border)] overflow-hidden text-xs">
+          <div className="flex overflow-hidden rounded-lg border border-[var(--border)] text-xs">
             <button
               type="button"
               onClick={() => handleFormatToggle('json')}
@@ -70,7 +80,7 @@ export function SwaggerEditorPanel() {
         </div>
       </div>
 
-      <div className="flex-1 min-h-0">
+      <div className="min-h-0 flex-1">
         <MonacoEditor
           height="100%"
           language={format === 'json' ? 'json' : 'yaml'}
@@ -89,7 +99,7 @@ export function SwaggerEditorPanel() {
 
       <div className="border-t border-[var(--border)] px-4 py-2 text-xs">
         {isValidating ? (
-          <span className="text-[var(--muted)]">Validating...</span>
+          <span className="text-[var(--muted)]">{t('validating')}</span>
         ) : isValid ? (
           <span className="text-emerald-500">{t('valid')}</span>
         ) : (

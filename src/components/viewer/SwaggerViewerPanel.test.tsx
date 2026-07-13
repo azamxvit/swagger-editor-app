@@ -67,13 +67,13 @@ function renderPanel() {
 
 describe('SwaggerViewerPanel', () => {
   it('shows a hint when no spec is loaded', () => {
-    mockUseSchema.mockReturnValue({ spec: null });
+    mockUseSchema.mockReturnValue({ spec: null, isLoading: false, isValidating: false });
     renderPanel();
     expect(screen.getByText('Load a valid OpenAPI schema to see endpoints')).toBeInTheDocument();
   });
 
   it('lists endpoints from the spec', () => {
-    mockUseSchema.mockReturnValue({ spec });
+    mockUseSchema.mockReturnValue({ spec, isLoading: false, isValidating: false });
     renderPanel();
     expect(screen.getByText('Pet Store')).toBeInTheDocument();
     expect(screen.getByText('/pets')).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe('SwaggerViewerPanel', () => {
   });
 
   it('opens endpoint details on click', () => {
-    mockUseSchema.mockReturnValue({ spec });
+    mockUseSchema.mockReturnValue({ spec, isLoading: false, isValidating: false });
     renderPanel();
     fireEvent.click(screen.getByText('/pets'));
     expect(screen.getByText('Responses')).toBeInTheDocument();

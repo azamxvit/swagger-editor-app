@@ -1,16 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-
-function HistorySkeleton() {
-  return (
-    <div className="animate-pulse space-y-3">
-      {[1, 2, 3].map((i) => (
-        <div key={i} className="h-12 rounded bg-[var(--surface)]" />
-      ))}
-    </div>
-  );
-}
+import { HistorySkeleton } from '@/components/ui/Skeleton';
 
 const HistoryListClient = dynamic(
   () => import('@/components/history/HistoryList').then((m) => m.HistoryList),

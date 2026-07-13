@@ -14,6 +14,7 @@ interface SchemaContextValue {
   spec: ParsedOpenAPISpec | null;
   isValid: boolean;
   isValidating: boolean;
+  isLoading: boolean;
   setContent: (content: string) => void;
   setFormat: (format: SchemaFormat) => void;
   validate: () => Promise<void>;
@@ -70,7 +71,11 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
   }, [content, validate]);
 
   useEffect(() => {
-    if (!user || loaded) return;
+    if (!user) {
+      setLoaded(true);
+      return;
+    }
+    if (loaded) return;
     fetch('/api/schema')
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
@@ -92,6 +97,7 @@ export function SchemaProvider({ children }: { children: React.ReactNode }) {
         spec,
         isValid: errors.length === 0 && spec !== null,
         isValidating,
+        isLoading: Boolean(user) && !loaded,
         setContent,
         setFormat,
         validate,
