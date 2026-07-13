@@ -58,6 +58,8 @@ const messages = {
     ruleSpecial: 'At least one special character (!@#$…)',
     charCount: '{count} characters',
     submitting: 'Please wait…',
+    showPassword: 'Show password',
+    hidePassword: 'Hide password',
   },
   errors: { generic: 'Something went wrong. Please try again.' },
 };
@@ -82,7 +84,7 @@ describe('AuthForm', () => {
     renderForm('sign-in');
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'not-an-email' } });
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'Password1!' } });
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'Sign In' }));
 
     await waitFor(() => {
       expect(document.querySelector('.error-text')).toBeInTheDocument();
@@ -95,7 +97,7 @@ describe('AuthForm', () => {
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } });
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: '123' } });
     fireEvent.change(screen.getByLabelText('Confirm Password'), { target: { value: '123' } });
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'Create Account' }));
 
     await waitFor(() => {
       expect(document.querySelector('.error-text')).toBeInTheDocument();
@@ -103,12 +105,25 @@ describe('AuthForm', () => {
     expect(mocks.signUp).not.toHaveBeenCalled();
   });
 
+  it('toggles password visibility', () => {
+    renderForm('sign-in');
+    const input = screen.getByLabelText('Password');
+    expect(input).toHaveAttribute('type', 'password');
+
+    fireEvent.click(screen.getByRole('button', { name: 'Show password' }));
+    expect(input).toHaveAttribute('type', 'text');
+    expect(screen.getByRole('button', { name: 'Hide password' })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Hide password' }));
+    expect(input).toHaveAttribute('type', 'password');
+  });
+
   it('signs in and redirects to the main page', async () => {
     mocks.signInWithPassword.mockResolvedValue({ error: null });
     renderForm('sign-in');
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'user@example.com' } });
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'Password1!' } });
-    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(screen.getByRole('button', { name: 'Sign In' }));
 
     await waitFor(() => {
       expect(mocks.signInWithPassword).toHaveBeenCalledWith({

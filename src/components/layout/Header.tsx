@@ -6,6 +6,7 @@ import { Link, useRouter } from '@/i18n/routing';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { HeaderAuthSkeleton } from '@/components/ui/Skeleton';
+import { AppLogoIcon, HistoryIcon } from '@/components/ui/icons';
 import toast from 'react-hot-toast';
 
 export function Header() {
@@ -37,7 +38,7 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <span className="text-[var(--primary)]">⚡</span>
+            <AppLogoIcon className="h-7 w-7 shrink-0" />
             <span>{t('app.title')}</span>
           </Link>
           <nav className="hidden items-center gap-4 text-sm sm:flex">
@@ -56,7 +57,8 @@ export function Header() {
             <HeaderAuthSkeleton />
           ) : user ? (
             <>
-              <Link href="/history" className="btn-secondary text-sm">
+              <Link href="/history" className="btn-secondary gap-1.5 text-sm">
+                <HistoryIcon className="h-3.5 w-3.5" />
                 {t('nav.history')}
               </Link>
               <button type="button" onClick={handleSignOut} className="btn-primary text-sm">

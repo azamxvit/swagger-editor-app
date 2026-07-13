@@ -69,6 +69,13 @@ describe('Header', () => {
     expect(screen.getByText('About')).toBeInTheDocument();
   });
 
+  it('uses the app logo icon instead of a lightning emoji', () => {
+    mockUseAuth.mockReturnValue({ user: null, loading: false, signOut: vi.fn() });
+    const { container } = renderHeader();
+    expect(container.textContent).not.toContain('⚡');
+    expect(screen.getByText('Swagger Editor').closest('a')?.querySelector('svg')).toBeTruthy();
+  });
+
   it('shows auth skeleton while loading', () => {
     mockUseAuth.mockReturnValue({ user: null, loading: true, signOut: vi.fn() });
     const { container } = renderHeader();

@@ -35,7 +35,9 @@
     "ruleSpecial": "Хотя бы один спецсимвол (!@#$…)",
     "charCount": "{count} символов",
     "submitting": "Подождите…",
-    "passwordRulesTitle": "Требования к паролю"
+    "passwordRulesTitle": "Требования к паролю",
+    "showPassword": "Показать пароль",
+    "hidePassword": "Скрыть пароль"
   },
   "editor": {
     "title": "Редактор",

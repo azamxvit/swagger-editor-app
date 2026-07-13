@@ -8,6 +8,7 @@ import { useAuth } from '@/components/providers/AuthProvider';
 import { convertFormat } from '@/lib/openapi/converter';
 import type { SchemaFormat } from '@/lib/openapi/types';
 import { EditorSkeleton } from '@/components/ui/Skeleton';
+import { CodeIcon } from '@/components/ui/icons';
 
 const MonacoEditor = dynamic(() => import('@monaco-editor/react'), {
   ssr: false,
@@ -54,7 +55,8 @@ export function SwaggerEditorPanel() {
   return (
     <section className="flex h-full flex-col" aria-labelledby="editor-title">
       <header className="flex items-center justify-between border-b border-[var(--border)] px-4 py-2">
-        <h2 id="editor-title" className="font-semibold">
+        <h2 id="editor-title" className="flex items-center gap-2 font-semibold">
+          <CodeIcon className="h-4 w-4 text-[var(--muted)]" />
           {t('title')}
         </h2>
         <div className="flex items-center gap-2">

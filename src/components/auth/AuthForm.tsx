@@ -14,6 +14,7 @@ import {
 } from '@/lib/auth/validation';
 import { useAuth } from '@/components/providers/AuthProvider';
 import { PasswordRequirements } from './PasswordRequirements';
+import { PasswordField } from './PasswordField';
 
 interface AuthFormProps {
   mode: 'sign-in' | 'sign-up';
@@ -97,11 +98,15 @@ export function AuthForm({ mode }: AuthFormProps) {
             )}
           </p>
 
-          <p className="m-0">
-            <span className="mb-1 flex items-center justify-between gap-2">
-              <label htmlFor="password" className="label mb-0">
-                {t('password')}
-              </label>
+          <PasswordField
+            id="password"
+            label={t('password')}
+            autoComplete={isSignUp ? 'new-password' : 'current-password'}
+            placeholder={t('passwordPlaceholder')}
+            error={errors.password?.message}
+            hint={!isSignUp ? t('passwordHint') : undefined}
+            describedBy={isSignUp ? 'password-requirements' : undefined}
+            trailing={
               <output
                 htmlFor="password"
                 className="text-xs text-[var(--muted)]"
@@ -109,65 +114,24 @@ export function AuthForm({ mode }: AuthFormProps) {
               >
                 {t('charCount', { count: passwordValue.length })}
               </output>
-            </span>
-            <input
-              id="password"
-              type="password"
-              autoComplete={isSignUp ? 'new-password' : 'current-password'}
-              className="input"
-              placeholder={t('passwordPlaceholder')}
-              aria-invalid={Boolean(errors.password)}
-              aria-describedby={
-                isSignUp
-                  ? 'password-requirements'
-                  : errors.password
-                    ? 'password-error'
-                    : 'password-hint'
-              }
-              {...register('password')}
-            />
-            {errors.password && (
-              <strong id="password-error" className="error-text font-normal">
-                {errors.password.message}
-              </strong>
-            )}
-            {isSignUp && (
-              <PasswordRequirements id="password-requirements" password={passwordValue} />
-            )}
-            {!isSignUp && (
-              <small id="password-hint" className="mt-1 block text-xs text-[var(--muted)]">
-                {t('passwordHint')}
-              </small>
-            )}
-          </p>
+            }
+            {...register('password')}
+          />
+          {isSignUp && (
+            <PasswordRequirements id="password-requirements" password={passwordValue} />
+          )}
 
           {isSignUp && (
-            <p className="m-0">
-              <label htmlFor="confirmPassword" className="label">
-                {t('confirmPassword')}
-              </label>
-              <input
-                id="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                className="input"
-                placeholder={t('confirmPasswordPlaceholder')}
-                aria-invalid={Boolean(
-                  'confirmPassword' in errors && errors.confirmPassword,
-                )}
-                aria-describedby={
-                  'confirmPassword' in errors && errors.confirmPassword
-                    ? 'confirm-error'
-                    : undefined
-                }
-                {...register('confirmPassword')}
-              />
-              {'confirmPassword' in errors && errors.confirmPassword && (
-                <strong id="confirm-error" className="error-text font-normal">
-                  {errors.confirmPassword.message}
-                </strong>
-              )}
-            </p>
+            <PasswordField
+              id="confirmPassword"
+              label={t('confirmPassword')}
+              autoComplete="new-password"
+              placeholder={t('confirmPasswordPlaceholder')}
+              error={
+                'confirmPassword' in errors ? errors.confirmPassword?.message : undefined
+              }
+              {...register('confirmPassword')}
+            />
           )}
         </fieldset>
 
